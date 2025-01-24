@@ -5,10 +5,13 @@ on:
 jobs:
   publish-doc:
     runs-on: ubuntu-latest
-    if: github.event.issue.pull_request && contains(github.event.comment.body, '/help')
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/help') &&  github.event.comment.user.login != 'github-actions[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Echo user
+        run: |
+          echo "${{ github.event.comment.user.login }}"
 
       - name: Push tag for ieg-addons
         uses: peter-evans/repository-dispatch@v1
