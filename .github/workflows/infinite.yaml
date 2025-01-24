@@ -1,0 +1,19 @@
+name: "Provide link to FAQ Doc"
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  publish-doc:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/help')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Push tag for ieg-addons
+        uses: peter-evans/repository-dispatch@v1
+        with:
+            token: "${{ secrets.Test_GH_TOKEN }}"
+            repository: NAVYAGUPTA1403/TravelProject
+            event-type: Trigger Dev tag creation Workflow
+            client-payload: '{"existing_pr": "${{ env.PR_NUMBER }}", "source_repo": "${{ env.repo_name }}","pat_token": "${{ secrets.Test_GH_TOKEN }}" }'
