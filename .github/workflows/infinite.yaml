@@ -1,4 +1,4 @@
-name: "Provide link to FAQ Doc"
+name: "Provide link to FAQ Do"
 on:
   issue_comment:
     types: [created]
